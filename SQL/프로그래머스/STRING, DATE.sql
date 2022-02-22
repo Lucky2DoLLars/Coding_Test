@@ -1,0 +1,25 @@
+-- 포르그래머스 SQL 고득점 Kit
+-- STRING, DATE
+
+-- 루시와 엘라 찾기
+SELECT ANIMAL_ID, NAME, SEX_UPON_INTAKE FROM ANIMAL_INS
+    WHERE NAME IN ('Lucy', 'Ella', 'Pickle', 'Rogan', 'Sabrina', 'Mitty');
+
+-- 이름에 el이 들어가는 동물 찾기
+SELECT ANIMAL_ID, NAME FROM ANIMAL_INS
+    WHERE NAME LIKE '%el%' AND ANIMAL_TYPE = "Dog"
+    ORDER BY NAME;
+
+-- 중성화 여부 파악하기
+SELECT ANIMAL_ID, NAME, IF(SEX_UPON_INTAKE IN ('Neutered Male', 'Spayed Female'), 'O', 'X') '중성화' FROM ANIMAL_INS
+    ORDER BY ANIMAL_ID;
+
+-- 오랜 기간 보호한 동물(2)
+SELECT O.ANIMAL_ID, O.NAME FROM ANIMAL_OUTS O
+    LEFT OUTER JOIN ANIMAL_INS I
+    ON O.ANIMAL_ID = I.ANIMAL_ID
+    ORDER BY DATEDIFF(O.DATETIME, I.DATETIME) DESC
+    LIMIT 2;
+
+-- DATETIME에서 DATE로 형 변환
+SELECT ANIMAL_ID, NAME, DATE_FORMAT(DATETIME, '%Y-%m-%d') '날짜' FROM ANIMAL_INS;
